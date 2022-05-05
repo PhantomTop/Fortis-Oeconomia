@@ -229,6 +229,28 @@ export interface ISigningCosmWasmClientContext {
   getBfotBalances: Function
   getGfotBalances: Function
   getSfotBalances: Function
+  getFotTokenInfo: Function
+  getBfotTokenInfo: Function
+  getGfotTokenInfo: Function
+  getSfotTokenInfo: Function
+  getClearanceInfo: Function
+  getSfotStakingInfo: Function
+  getUnstakingList: Function
+  getSfotUstLpStakingInfo: Function
+  getSfotBfotLpStakingInfo: Function
+  getSfotGfotLpStakingInfo: Function
+  getSfotJunoLpStakingInfo: Function
+  getSfotAtomLpStakingInfo: Function
+  getbFotInfo: Function
+  getSfot2ust: Function
+  getPool1Info: Function
+  getPool2Info: Function
+  getPool3Info: Function
+  getPool4Info: Function
+  getPool5Info: Function
+  getPool6Info: Function
+  getPool7Info: Function
+  getPool8Info: Function
   getCommonBalances: Function
   getWalletBalances: Function
   getCommunitySaleBalances: Function
@@ -1073,10 +1095,9 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       if (showNotification) NotificationManager.error(`GetBalances error : ${error}`)
     }
   }
-  const getSfotBalances = async () => {
-    setLoading(true)
+
+  const getFotTokenInfo = async () => {
     try {
-      //FOT balance and info
       const objectFotTokenInfo: JsonObject = await signingClient.queryContractSmart(PUBLIC_FOT_CONTRACT, {
         token_info: {},
       })
@@ -1090,8 +1111,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       SetFotBalanceStr(
         parseInt(objectFot.balance) / Math.pow(10, objectFotTokenInfo.decimals) + ' ' + objectFotTokenInfo.symbol,
       )
+    } catch {}
+  }
 
-      //BFOT balance and info
+  const getBfotTokenInfo = async () => {
+    try {
       const objectBfotTokenInfo: JsonObject = await signingClient.queryContractSmart(PUBLIC_BFOT_CONTRACT, {
         token_info: {},
       })
@@ -1105,8 +1129,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       SetBfotBalanceStr(
         parseInt(objectBfot.balance) / Math.pow(10, objectBfotTokenInfo.decimals) + ' ' + objectBfotTokenInfo.symbol,
       )
+    } catch {}
+  }
 
-      //GFOT balance and info
+  const getGfotTokenInfo = async () => {
+    try {
       const objectGfotTokenInfo: JsonObject = await signingClient.queryContractSmart(PUBLIC_GFOT_CONTRACT, {
         token_info: {},
       })
@@ -1120,8 +1147,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       SetGfotBalanceStr(
         parseInt(objectGfot.balance) / Math.pow(10, objectGfotTokenInfo.decimals) + ' ' + objectGfotTokenInfo.symbol,
       )
+    } catch {}
+  }
 
-      //SFOT balance and info
+  const getSfotTokenInfo = async () => {
+    try {
       const objectSfotTokenInfo: JsonObject = await signingClient.queryContractSmart(PUBLIC_SFOT_CONTRACT, {
         token_info: {},
       })
@@ -1135,14 +1165,20 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       SetSfotBalanceStr(
         parseInt(objectSfot.balance) / Math.pow(10, objectSfotTokenInfo.decimals) + ' ' + objectSfotTokenInfo.symbol,
       )
+    } catch {}
+  }
 
-      //Clearance Contract Info
+  const getClearanceInfo = async () => {
+    try {
       const clearanceContractInfo = await signingClient.queryContractSmart(PUBLIC_CLEARANCE_CONTRACT, {
         config: {},
       })
       setClearanceContractInfo(clearanceContractInfo)
+    } catch {}
+  }
 
-      //sFotStaking Contract Info
+  const getSfotStakingInfo = async () => {
+    try {
       const sfotStakingContractInfo = await signingClient.queryContractSmart(PUBLIC_SFOTSTAKING_CONTRACT, {
         config: {},
       })
@@ -1163,54 +1199,75 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
 
       setsFotStakingMyStaked(sfotStakingMyInfo.amount)
       setsFotStakingMyReward(sfotStakingMyInfo.reward + new_reward)
+    } catch {}
+  }
 
+  const getUnstakingList = async () => {
+    try {
       const unstaking_list = await signingClient.queryContractSmart(PUBLIC_SFOTSTAKING_CONTRACT, {
         unstaking: {
           address: `${walletAddress}`,
         },
       })
       setsFotUnstakingList(unstaking_list)
+    } catch {}
+  }
 
-      //Lp Staking contract Info
-      //SFOT-UST Contract Info
+  const getSfotUstLpStakingInfo = async () => {
+    try {
       const sfotUstLpStakingContractInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_UST_STAKING_CONTRACT, {
         config: {},
       })
       setSfotUstLpStakingContractInfo(sfotUstLpStakingContractInfo)
+    } catch {}
+  }
 
-      //SFOT-BFOT Contract Info
+  const getSfotBfotLpStakingInfo = async () => {
+    try {
       const sfotBfotLpStakingContractInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_BFOT_STAKING_CONTRACT, {
         config: {},
       })
       setSfotBfotLpStakingContractInfo(sfotBfotLpStakingContractInfo)
+    } catch {}
+  }
 
-      // SFOT-GFOT Contract Info
+  const getSfotGfotLpStakingInfo = async () => {
+    try {
       const sfotGfotLpStakingContractInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_GFOT_STAKING_CONTRACT, {
         config: {},
       })
       setSfotGfotLpStakingContractInfo(sfotGfotLpStakingContractInfo)
+    } catch {}
+  }
 
-      //SFOT-JUNO Contract Info
+  const getSfotJunoLpStakingInfo = async () => {
+    try {
       const sfotJunoLpStakingContractInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_JUNO_STAKING_CONTRACT, {
         config: {},
       })
       setSfotJunoLpStakingContractInfo(sfotJunoLpStakingContractInfo)
+    } catch {}
+  }
 
-      //SFOT-ATOM Contract Info
+  const getSfotAtomLpStakingInfo = async () => {
+    try {
       const sfotAtomLpStakingContractInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_ATOM_STAKING_CONTRACT, {
         config: {},
       })
       setSfotAtomLpStakingContractInfo(sfotAtomLpStakingContractInfo)
+    } catch {}
+  }
 
+  const getbFotInfo = async () => {
+    try {
       const bFot2JunoPriceInfo = await signingClient.queryContractSmart(PUBLIC_BFOT_JUNO_POOL_CONTRACT, {
         token2_for_token1_price: { token2_amount: '10000000000' },
       })
       setbFot2Juno(Number(convertMicroDenomToDenom2(bFot2JunoPriceInfo.token1_amount, 6)))
-
       const Juno2bFotPriceInfo = await signingClient.queryContractSmart(PUBLIC_BFOT_JUNO_POOL_CONTRACT, {
         token1_for_token2_price: { token1_amount: '1000000' },
       })
-      setJuno2bFot(Number(convertMicroDenomToDenom2(Juno2bFotPriceInfo.token2_amount, objectBfotTokenInfo.decimals)))
+      setJuno2bFot(Number(convertMicroDenomToDenom2(Juno2bFotPriceInfo.token2_amount, bfotTokenInfo.decimals)))
 
       const Juno2UstPriceInfo = await signingClient.queryContractSmart(PUBLIC_UST_JUNO_POOL_CONTRACT, {
         token1_for_token2_price: { token1_amount: '1000000' },
@@ -1220,15 +1277,17 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       const bfot2ustval = Math.round((Juno2UstPriceInfo.token2_amount * bFot2JunoPriceInfo.token1_amount) / 1000000)
 
       setbFot2Ust(Number(convertMicroDenomToDenom2(bfot2ustval, 6)))
+    } catch {}
+  }
 
-      //Liquidity pools and lp token info and balances
-      //SFOT-UST
+  const getSfot2ust = async () => {
+    try {
       const sfotUstPoolInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_UST_POOL_CONTRACT, {
         info: {},
       })
       const sfot2ustval =
         (Number(convertMicroDenomToDenom2(sfotUstPoolInfo.token2_reserve, 6)) /
-          Number(convertMicroDenomToDenom2(sfotUstPoolInfo.token1_reserve, objectSfotTokenInfo.decimals))) *
+          Number(convertMicroDenomToDenom2(sfotUstPoolInfo.token1_reserve, bfotTokenInfo.decimals))) *
         1000000
 
       setsFot2Ust(Number(convertMicroDenomToDenom2(sfot2ustval, 6)))
@@ -1236,11 +1295,13 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
       //Changed APY formula
       // (36.000.000 x bFOT price )/(staked sFOT x sFOT price) for DPR on sFOT
       // dpr * 365 for APR on sFOT
-      setsFotStakingApy(
-        (365 * 36000000 * Number(convertMicroDenomToDenom2(bfot2ustval, 6))) /
-          (Number(convertMicroDenomToDenom2(sfotStakingContractInfo.gfot_amount, objectSfotTokenInfo.decimals)) *
-            Number(convertMicroDenomToDenom2(sfot2ustval, 6))),
-      )
+      if (bFot2Ust) {
+        setsFotStakingApy(
+          (365 * 36000000 * Number(bFot2Ust)) /
+            (Number(convertMicroDenomToDenom2(sfotStakingContractInfo.gfot_amount, bfotTokenInfo.decimals)) *
+              Number(convertMicroDenomToDenom2(sfot2ustval, 6))),
+        )
+      }
 
       setSfotUstPoolInfo(sfotUstPoolInfo)
       const sfotUstLpTokenInfo = await signingClient.queryContractSmart(sfotUstPoolInfo.lp_token_address, {
@@ -1252,8 +1313,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         balance: { address: walletAddress },
       })
       SetSfotUstLpBalance(sfotUstLpBalance.balance)
+    } catch {}
+  }
 
-      //SFOT-BFOT (pool1 for dungeon)
+  const getPool1Info = async () => {
+    try {
       const sfotBfotPoolInfo = await signingClient.queryContractSmart(PUBLIC_SFOT_BFOT_POOL_CONTRACT, {
         info: {},
       })
@@ -1312,9 +1376,10 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         balance: { address: walletAddress },
       })
       SetSfotAtomLpBalance(sfotAtomLpBalance.balance)
-
-      // ================== For Dungeon ==================
-      // pool2: pool1-bfot
+    } catch {}
+  }
+  const getPool2Info = async () => {
+    try {
       const pool2Info = await signingClient.queryContractSmart(PUBLIC_POOL1_BFOT_POOL2_CONTRACT, {
         info: {},
       })
@@ -1333,8 +1398,10 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool1LpBfotLpStakingContractInfo(pool2StakingContractInfo)
-
-      // pool3: pool2-sfot
+    } catch {}
+  }
+  const getPool3Info = async () => {
+    try {
       const pool3Info = await signingClient.queryContractSmart(PUBLIC_POOL2_SFOT_POOL3_CONTRACT, {
         info: {},
       })
@@ -1353,8 +1420,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool2LpSfotLpStakingContractInfo(pool3StakingContractInfo)
+    } catch {}
+  }
 
-      // pool4: pool3-ust
+  const getPool4Info = async () => {
+    try {
       const pool4Info = await signingClient.queryContractSmart(PUBLIC_POOL3_UST_POOL4_CONTRACT, {
         info: {},
       })
@@ -1373,8 +1443,10 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool3LpUstLpStakingContractInfo(pool4StakingContractInfo)
-
-      // pool5: pool4-juno
+    } catch {}
+  }
+  const getPool5Info = async () => {
+    try {
       const pool5Info = await signingClient.queryContractSmart(PUBLIC_POOL4_JUNO_POOL5_CONTRACT, {
         info: {},
       })
@@ -1393,8 +1465,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool4LpJunoLpStakingContractInfo(pool5StakingContractInfo)
+    } catch {}
+  }
 
-      // pool6: pool5-atom
+  const getPool6Info = async () => {
+    try {
       const pool6Info = await signingClient.queryContractSmart(PUBLIC_POOL5_ATOM_POOL6_CONTRACT, {
         info: {},
       })
@@ -1413,8 +1488,10 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool5LpAtomLpStakingContractInfo(pool6StakingContractInfo)
-
-      // pool7: pool6-gfot
+    } catch {}
+  }
+  const getPool7Info = async () => {
+    try {
       const pool7Info = await signingClient.queryContractSmart(PUBLIC_POOL6_GFOT_POOL7_CONTRACT, {
         info: {},
       })
@@ -1433,8 +1510,11 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool6LpGfotLpStakingContractInfo(pool7StakingContractInfo)
+    } catch {}
+  }
 
-      // pool8: pool7-fot
+  const getPool8Info = async () => {
+    try {
       const pool8Info = await signingClient.queryContractSmart(PUBLIC_POOL7_FOT_POOL8_CONTRACT, {
         info: {},
       })
@@ -1453,6 +1533,78 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
         config: {},
       })
       setPool7LpFotLpStakingContractInfo(pool8StakingContractInfo)
+    } catch {}
+  }
+
+  const getSfotBalances = async () => {
+    setLoading(true)
+    try {
+      //FOT balance and info
+      await getFotTokenInfo()
+
+      //BFOT balance and info
+      await getBfotTokenInfo()
+
+      //GFOT balance and info
+      await getGfotTokenInfo()
+
+      //SFOT balance and info
+      await getSfotTokenInfo()
+
+      //Clearance Contract Info
+      await getClearanceInfo()
+
+      //sFotStaking Contract Info
+      await getSfotStakingInfo()
+
+      await getUnstakingList()
+
+      //Lp Staking contract Info
+      //SFOT-UST Contract Info
+      await getSfotUstLpStakingInfo()
+
+      //SFOT-BFOT Contract Info
+      await getSfotBfotLpStakingInfo()
+
+      // SFOT-GFOT Contract Info
+      await getSfotGfotLpStakingInfo()
+
+      //SFOT-JUNO Contract Info
+      await getSfotJunoLpStakingInfo()
+
+      //SFOT-ATOM Contract Info
+      await getSfotAtomLpStakingInfo()
+
+      await getbFotInfo()
+
+      //Liquidity pools and lp token info and balances
+      //SFOT-UST
+      await getSfot2ust()
+
+      //SFOT-BFOT (pool1 for dungeon)
+      await getPool1Info()
+
+      // ================== For Dungeon ==================
+      // pool2: pool1-bfot
+      await getPool2Info()
+
+      // pool3: pool2-sfot
+      await getPool3Info()
+
+      // pool4: pool3-ust
+      await getPool4Info()
+
+      // pool5: pool4-juno
+      await getPool5Info()
+
+      // pool6: pool5-atom
+      await getPool6Info()
+
+      // pool7: pool6-gfot
+      await getPool7Info()
+
+      // pool8: pool7-fot
+      await getPool8Info()
 
       setLoading(false)
       if (showNotification) NotificationManager.info(`Successfully got balances`)
@@ -4022,6 +4174,28 @@ export const useSigningCosmWasmClient = (): ISigningCosmWasmClientContext => {
     getBfotBalances,
     getGfotBalances,
     getSfotBalances,
+    getFotTokenInfo,
+    getBfotTokenInfo,
+    getGfotTokenInfo,
+    getSfotTokenInfo,
+    getClearanceInfo,
+    getSfotStakingInfo,
+    getUnstakingList,
+    getSfotUstLpStakingInfo,
+    getSfotBfotLpStakingInfo,
+    getSfotGfotLpStakingInfo,
+    getSfotJunoLpStakingInfo,
+    getSfotAtomLpStakingInfo,
+    getbFotInfo,
+    getSfot2ust,
+    getPool1Info,
+    getPool2Info,
+    getPool3Info,
+    getPool4Info,
+    getPool5Info,
+    getPool6Info,
+    getPool7Info,
+    getPool8Info,
     getWalletBalances,
     getCommunitySaleBalances,
     updateInterval,

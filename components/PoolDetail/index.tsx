@@ -105,7 +105,18 @@ const PoolDetail = ({
     executeLpClaimReward,
     executeLpCreateUnstake,
     executeLpFetchUnstake,
-    getSfotBalances,
+    getBfotTokenInfo,
+    getSfotTokenInfo,
+    getGfotTokenInfo,
+    getFotTokenInfo,
+    getPool1Info,
+    getPool2Info,
+    getPool3Info,
+    getPool4Info,
+    getPool5Info,
+    getPool6Info,
+    getPool7Info,
+    getPool8Info,
     updateInterval,
     getCommonBalances,
 
@@ -149,13 +160,46 @@ const PoolDetail = ({
   useEffect(() => {
     if (seconds === 0) {
       getCommonBalances()
-      getSfotBalances()
+      switch (asset) {
+        case 10:
+          getBfotTokenInfo()
+          getSfotTokenInfo()
+          getPool1Info()
+          break
+        case 11:
+          getBfotTokenInfo()
+          getPool2Info()
+          break
+        case 12:
+          getSfotTokenInfo()
+          getPool3Info()
+          break
+        case 13:
+          getPool4Info()
+          break
+        case 14:
+          getPool5Info()
+          break
+        case 15:
+          getPool6Info()
+          break
+        case 16:
+          getGfotTokenInfo()
+          getPool7Info()
+          break
+        case 17:
+          getFotTokenInfo()
+          getPool8Info()
+          break
+        default:
+          break
+      }
     }
     const interval = setInterval(() => {
       setSeconds(seconds => (seconds + 1) % updateInterval)
     }, 1000)
     return () => clearInterval(interval)
-  }, [seconds])
+  }, [seconds, asset])
 
   const [poolInfo, setPoolInfo] = useState(null)
   const [decimals, setDecimals] = useState([10, 10])

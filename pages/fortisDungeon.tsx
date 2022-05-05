@@ -95,18 +95,9 @@ const fortisDungeon = () => {
     calcExpectedSwapAmountForDungeon,
     swapAmount,
     setSwapAmount,
-    getSfotBalances,
-    updateInterval,
   } = useSigningClient()
 
   const { setTheme } = useContext(ThemeContext)
-
-  useEffect(() => {
-    if (!signingClient || walletAddress.length === 0) {
-      return
-    }
-    getSfotBalances()
-  }, [signingClient, walletAddress])
 
   // only pool3 and pool8
   useEffect(() => {
